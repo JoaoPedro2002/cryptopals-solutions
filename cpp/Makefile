@@ -23,7 +23,7 @@ INCLUDE_PATH = /usr/lib/avr/include
 # splint static check
 SPLINT       = splint set1.cpp aes.c -I$(INCLUDE_PATH) +charindex -unrecog
 
-default: set1.elf
+default: set2.elf
 
 .SILENT:
 .PHONY:  lint clean
@@ -33,6 +33,14 @@ set1.o : set1.cpp aes.hpp aes.o cryptoutils.hpp cryptoutils.o
 	$(CCPP) $(CFLAGS) -o  $@ $<
 
 set1.elf : aes.o cryptoutils.o set1.o
+	echo [LD] $@
+	$(CCPP) $(LDFLAGS) -o $@ $^
+
+set2.o : set2.cpp aes.hpp aes.o cryptoutils.hpp cryptoutils.o
+	echo [CCPP] $@ $(CFLAGS)
+	$(CCPP) $(CFLAGS) -o  $@ $<
+
+set2.elf : aes.o cryptoutils.o set2.o
 	echo [LD] $@
 	$(CCPP) $(LDFLAGS) -o $@ $^
 
@@ -47,8 +55,14 @@ cryptoutils.o : cryptoutils.cpp cryptoutils.hpp
 clean:
 	rm -f *.OBJ *.LST *.o *.gch *.out *.hex *.map *.elf *.a
 
+all:
+	make clean && make set1.elf && make set2.elf
+
 set1:
-	make clean && make && ./set1.elf
+	make set1.elf && ./set1.elf && make clean
+
+set2:
+	make set2.elf && ./set2.elf && make clean
 
 lint:
 	$(call SPLINT)

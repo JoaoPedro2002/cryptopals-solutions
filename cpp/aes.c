@@ -73,7 +73,7 @@ typedef uint8_t state_t[4][4];
 
 
 
-// The lookup-tables are marked const so they can be placed in read-only storage instead of RAM
+// The lookup-tables are marked const, so they can be placed in read-only storage instead of RAM
 // The numbers below can be computed dynamically trading ROM for RAM - 
 // This can be useful in (embedded) bootloader applications, where ROM is often limited.
 static const uint8_t sbox[256] = {
@@ -412,7 +412,7 @@ static void InvShiftRows(state_t* state)
 // Cipher is the main function that encrypts the PlainText.
 static void Cipher(state_t* state, const uint8_t* RoundKey)
 {
-  uint8_t round = 0;
+  uint8_t round;
 
   // Add the First round key to the state before starting the rounds.
   AddRoundKey(0, state, RoundKey);
@@ -438,7 +438,7 @@ static void Cipher(state_t* state, const uint8_t* RoundKey)
 #if (defined(CBC) && CBC == 1) || (defined(ECB) && ECB == 1)
 static void InvCipher(state_t* state, const uint8_t* RoundKey)
 {
-  uint8_t round = 0;
+  uint8_t round;
 
   // Add the First round key to the state before starting the rounds.
   AddRoundKey(Nr, state, RoundKey);

@@ -39,3 +39,5 @@ bool comp(const std::pair<uint, float> &a, const std::pair<uint, float> &b);
 std::vector<std::pair<uint, float>> get_keysizes_distances(std::vector<uint8_t> content, uint min_keysize, uint max_keysize);
 
 std::vector<uint8_t> get_best_key(std::vector<uint8_t> content, std::vector<std::pair<uint, float>> keysizes_vector, uint sample_size);
+
+std::vector<uint8_t> pkcs7_padding(std::vector<uint8_t> buffer, uint block_size);

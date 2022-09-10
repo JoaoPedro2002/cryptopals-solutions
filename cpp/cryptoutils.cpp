@@ -294,3 +294,12 @@ std::vector<uint8_t> get_best_key(std::vector<uint8_t> content, std::vector<std:
     }
     return best_key;
 }
+
+std::vector<uint8_t> pkcs7_padding(std::vector<uint8_t> buffer, uint block_size) {
+    if (buffer.size() % block_size == 0) return buffer;
+    uint size = block_size - (buffer.size() % block_size);    
+    std::vector<uint8_t> padding(size, 4);
+    buffer.insert(buffer.end(), padding.begin(), padding.end());
+    return buffer;
+}
+
